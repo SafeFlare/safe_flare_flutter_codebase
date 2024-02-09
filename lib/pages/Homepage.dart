@@ -10,6 +10,8 @@ class _Homepage extends State<Homepage> {
 
   int _currentIndex = 0;
 
+  late BuildContext context;
+
   static List<Map<String, dynamic>> news = [
     {
       "News": "Berita kebakaran 1",
@@ -26,9 +28,77 @@ class _Homepage extends State<Homepage> {
   ];
 
   var content = [
-    Column(
+    Builder(
+    builder: (BuildContext context) =>     Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+          Padding(padding: EdgeInsets.fromLTRB(0,20,0,0), 
+          child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {}, 
+                      child: 
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: 
+                        Image(image: AssetImage("assets/images/clock_logo.png")),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xfff8ffd2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      fixedSize: Size(MediaQuery.of(context).size.width * 0.4, 100)
+                    )),
+                    SizedBox(height: 5,),
+                    Text("Laporan Terakhir",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,),
+                  ],
+                ),
+
+                SizedBox(width: MediaQuery.of(context).size.width * 0.1,),
+
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {}, 
+                      child: 
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: 
+                        Image(image: AssetImage("assets/images/report_logo.png")),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xfff8ffd2),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      fixedSize: Size(MediaQuery.of(context).size.width * 0.4, 100)
+                    )),
+                    SizedBox(height: 5,),
+                    Text("Pelaporan",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20,20,20,0),
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xffd0f288), 
+              ),
+            ),
+          ),
           Padding(
             padding: EdgeInsets.fromLTRB(20,20,20,0),
             child: Column(children: [
@@ -38,7 +108,7 @@ class _Homepage extends State<Homepage> {
             ]),
           ),
           Container(
-            height: 230,
+            height: 200,
             child: 
             ListView(
               scrollDirection: Axis.horizontal,
@@ -49,7 +119,7 @@ class _Homepage extends State<Homepage> {
                     Stack(
                       children: [
                       ClipRRect(borderRadius: BorderRadius.circular(20),
-                        child: Image.network(data['imageURL'], height: 200,),
+                        child: Image.network(data['imageURL'], ),
                       ),
                       Positioned(
                         left: 20,
@@ -64,6 +134,7 @@ class _Homepage extends State<Homepage> {
               ),
           ),
         ],),
+    ),
     Center(child: Text("Maps"),),
     Center(child: Text("Profil"),),
   ];
@@ -81,7 +152,7 @@ class _Homepage extends State<Homepage> {
           backgroundColor: Color(0xffd0f288),
         ),
         body: content[_currentIndex],
-        backgroundColor: Color(0xfff8ffd2),
+        backgroundColor: Colors.white,
         bottomNavigationBar: BottomNavigationBar(currentIndex: _currentIndex, 
         items: [
           BottomNavigationBarItem(
