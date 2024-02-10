@@ -158,7 +158,8 @@ class _Homepage extends State<Homepage> {
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white),
-                          )),
+                          )
+                        ),
                     ],
                   ),
                 );
