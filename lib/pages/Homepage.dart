@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Homepage extends StatefulWidget {
 
@@ -27,9 +29,18 @@ class _Homepage extends State<Homepage> {
     },
   ];
 
+  static Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+
+  static const _initialCameraPosition = CameraPosition(
+    target: LatLng(37.773972, -122.431297),
+    zoom: 11.5,
+  );
+
   var content = [
     Builder(
-    builder: (BuildContext context) =>     Column(
+    builder: (BuildContext context) => 
+      Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
           Padding(padding: EdgeInsets.fromLTRB(0,20,0,0), 
@@ -135,7 +146,24 @@ class _Homepage extends State<Homepage> {
           ),
         ],),
     ),
-    Center(child: Text("Maps"),),
+    Builder(builder: (BuildContext context) => 
+      Scaffold( 
+          body: GoogleMap( 
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            initialCameraPosition: _initialCameraPosition,
+            zoomControlsEnabled: false,
+            myLocationButtonEnabled: false,
+          ),
+          floatingActionButton: FloatingActionButton( 
+            backgroundColor: Color(0xffd0f288),
+            foregroundColor: Colors.black,
+            onPressed: _goBack,
+            child: const Icon(Icons.center_focus_strong),
+          ),
+        ),
+    ),
     Center(child: Text("Profil"),),
   ];
 
@@ -176,5 +204,10 @@ class _Homepage extends State<Homepage> {
         backgroundColor: Color(0xffd0f288),
         ),
       );
+  }
+
+  static Future<void> _goBack() async {
+    final GoogleMapController controller = await _controller.future;
+    await controller.animateCamera(CameraUpdate.newCameraPosition(_initialCameraPosition));
   }
 }
