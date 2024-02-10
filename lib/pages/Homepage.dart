@@ -162,8 +162,23 @@ class _Homepage extends State<Homepage> {
         ],
       ),
     ),
-    const Center(
-      child: Text("Maps"),
+    Builder(builder: (BuildContext context) => 
+      Scaffold( 
+          body: GoogleMap( 
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            initialCameraPosition: _initialCameraPosition,
+            zoomControlsEnabled: false,
+            myLocationButtonEnabled: false,
+          ),
+          floatingActionButton: FloatingActionButton( 
+            backgroundColor: Color(0xffd0f288),
+            foregroundColor: Colors.black,
+            onPressed: _goBack,
+            child: const Icon(Icons.center_focus_strong),
+          ),
+        ),
     ),
     Center(
         child: Center(
@@ -279,7 +294,9 @@ class _Homepage extends State<Homepage> {
           child: const Text('Logout'),
         ),
       ],
-    ))),
+    )
+    )
+    ),
   ];
 
   @override
