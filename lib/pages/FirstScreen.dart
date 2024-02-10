@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:safe_flare/pages/homepage.dart';
+import 'package:safe_flare/pages/AuthenticateSignInFirst.dart';
+import 'package:safe_flare/pages/AuthenticateSignUpFirst.dart';
 
 class FirstScreen extends StatelessWidget {
 
@@ -42,7 +44,7 @@ class FirstScreen extends StatelessWidget {
               ElevatedButton(onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return Homepage();
+                    return AuthenticateSignInFirst();
                   })
                 );
               }, 
@@ -52,7 +54,11 @@ class FirstScreen extends StatelessWidget {
                 fixedSize: Size(150,20)
               )),
               OutlinedButton(onPressed: () {
-
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) {
+                    return AuthenticateSignUpFirst();
+                  })
+                );
               }, child: Text("Daftar", style: TextStyle(color: Colors.black),),
               style: OutlinedButton.styleFrom(
                 fixedSize: Size(150,20)
