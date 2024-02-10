@@ -1,6 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:safe_flare/pages/Notification.dart';
+import 'package:safe_flare/pages/Account.dart';
+import 'package:safe_flare/pages/Feedback.dart';
+import 'package:safe_flare/pages/Settings.dart';
+import 'package:safe_flare/pages/Add_Device.dart';
+import 'package:safe_flare/pages/Customer_Support.dart';
 
 class Homepage extends StatefulWidget {
   @override
@@ -180,7 +186,8 @@ class _Homepage extends State<Homepage> {
           ),
         ),
     ),
-    Center(
+    Builder(builder: (BuildContext context) =>
+  Center(
         child: Center(
             child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -239,6 +246,7 @@ class _Homepage extends State<Homepage> {
               child: ElevatedButton(
                 onPressed: () {
                   // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => ChatScreen()));
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
@@ -263,24 +271,28 @@ class _Homepage extends State<Homepage> {
             ElevatedButton(
               onPressed: () {
                 // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                Navigator.push(context,MaterialPageRoute(builder: (context) => Account()));
               },
               child: const Text('Account'),
             ),
             ElevatedButton(
               onPressed: () {
                 // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                Navigator.push(context,MaterialPageRoute(builder: (context) => SettingsPage()));
               },
               child: const Text('App Setting'),
             ),
             ElevatedButton(
               onPressed: () {
                 // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                Navigator.push(context,MaterialPageRoute(builder: (context) => AddDevicePage()));
               },
               child: const Text('Add Device'),
             ),
             ElevatedButton(
               onPressed: () {
                 // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                Navigator.push(context,MaterialPageRoute(builder: (context) => FeedbackPage()));
               },
               child: const Text('Feedback'),
             ),
@@ -296,8 +308,16 @@ class _Homepage extends State<Homepage> {
       ],
     )
     )
-    ),
+    )),
   ];
+
+  void showSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('SnackBar displayed using BuildContext'),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -321,6 +341,7 @@ class _Homepage extends State<Homepage> {
                 icon: Icon(Icons.notifications), // Ikon notifikasi
                 onPressed: () {
                   // Logika yang akan dijalankan saat tombol ditekan
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => Notifications()));
                 },
               ),
               Positioned(
