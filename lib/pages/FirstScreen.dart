@@ -1,36 +1,38 @@
+// ignore: file_names
 import 'package:flutter/material.dart';
-import 'package:safe_flare/pages/homepage.dart';
 import 'package:safe_flare/pages/AuthenticateSignInFirst.dart';
 import 'package:safe_flare/pages/AuthenticateSignUpFirst.dart';
 
 class FirstScreen extends StatelessWidget {
+  const FirstScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Padding(padding: EdgeInsets.fromLTRB(10,10,0,10),
+          leading: const Padding(padding: EdgeInsets.fromLTRB(10,10,0,10),
             child: Image(image: AssetImage("assets/images/logononcut.png"),)),
-          title: Text("SafeFlare",
+          title: const Text("SafeFlare",
             style: TextStyle(
               fontWeight: FontWeight.bold,
             )),
-          backgroundColor: Color(0xfff8ffd2),
+          backgroundColor: const Color(0xfff8ffd2),
         ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(image: AssetImage("assets/images/forest_illustration.png"),),
-              SizedBox(height: 20,),
-              Text("Halo Masyarakat!",
+              const Image(image: AssetImage("assets/images/forest_illustration.png"),),
+              const SizedBox(height: 20,),
+              const Text("Halo Masyarakat!",
                  style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                 )
               ),
-              SizedBox(height: 20,),
-              Padding(padding: EdgeInsets.fromLTRB(40,0,40,0),
+              const SizedBox(height: 20,),
+              const Padding(padding: EdgeInsets.fromLTRB(40,0,40,0),
                 child: 
                 Text("Menanggapi adanya keresahan kebakaran hutan dan lahan yang dilakukan oleh orang yang tak bertanggung jawab kami berinisiatif untuk ikut membantu dalam pemantauan kebakaran hutan dan lahan baik terbakar secara disengaja atau tidak disengaja. Mari bergabung dengan kami untuk bersama sama memantau hutan dan lahan dibumi kita tercinta.",
                 textAlign: TextAlign.center,
@@ -40,34 +42,36 @@ class FirstScreen extends StatelessWidget {
                 )
               ),
               ),
-              SizedBox(height: 40,),
+              const SizedBox(height: 40,),
               ElevatedButton(onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return AuthenticateSignInFirst();
+                    return const AuthenticateSignInFirst();
                   })
                 );
               }, 
-              child: Text("Masuk", style: TextStyle(color: Colors.white),),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xffdf826c),
-                fixedSize: Size(150,20)
-              )),
+                  backgroundColor: const Color(0xffdf826c),
+                  fixedSize: const Size(150,20)
+                ),
+              child: const Text("Masuk", style: TextStyle(color: Colors.white),)
+              ),
               OutlinedButton(onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) {
-                    return AuthenticateSignUpFirst();
+                    return const AuthenticateSignUpFirst();
                   })
                 );
-              }, child: Text("Daftar", style: TextStyle(color: Colors.black),),
+              }, 
               style: OutlinedButton.styleFrom(
-                fixedSize: Size(150,20)
+                fixedSize: const Size(150,20)
               ),
+              child: const Text("Daftar", style: TextStyle(color: Colors.black),),
               )
             ],
           )
           ),
-        backgroundColor: Color(0xfff8ffd2),
+        backgroundColor: const Color(0xfff8ffd2),
       );
   }
 }
