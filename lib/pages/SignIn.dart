@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_flare/pages/Homepage.dart';
 
@@ -28,10 +29,16 @@ class _SignInState extends State<SignIn> {
                     image: const AssetImage("assets/images/logononedited.png"),
                     width: MediaQuery.of(context).size.width * 0.5,
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   const TextField(
                     decoration: InputDecoration( 
                       hintText: "Email",
                     ),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   const TextField(
                     obscureText: true,
@@ -48,23 +55,38 @@ class _SignInState extends State<SignIn> {
                         return Homepage();
                       })
                     );
-                  }, 
-                  child: const Text("Masuk", style: TextStyle(color: Colors.white),),
+                  },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xffdf826c),
-                    fixedSize: const Size(150,20)
-                  )),
+                    backgroundColor:  const Color(0xffdf826c),
+                    fixedSize:  const Size(150,20)
+                  ), 
+                  child: const Text("Login", style: TextStyle(color: Colors.white),)),
                   const SizedBox(
                     height: 20,
                   ),                                    
-                  ElevatedButton(onPressed: () {widget.toggleView();}, child: const Text("to sign up"))
+                  RichText(
+                    text:  TextSpan(
+                      text: 'Not registered? ',
+                      style: const TextStyle(color: Colors.black),
+                      children: [ 
+                        TextSpan( 
+                          text: 'Register here',
+                          style: const TextStyle(color: Color(0xffdf826c), fontWeight: FontWeight.bold),
+                          recognizer: TapGestureRecognizer()..onTap = () {
+                            widget.toggleView();
+                          },
+                        )
+                      ]
+                    ),
+                    
+                  )
                 ],
               ),
             ),
           ],
         )
       ),
-      backgroundColor: const Color(0xfff8ffd2),
+      backgroundColor:  const Color(0xfff8ffd2),
     );
   }
 }
