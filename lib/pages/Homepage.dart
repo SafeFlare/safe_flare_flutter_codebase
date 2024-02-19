@@ -14,9 +14,9 @@ class _Homepage extends State<Homepage> {
   int _currentIndex = 0;
 
   var content = [
-    Home(),
-    Maps(),
-    Profile(),
+    const Home(),
+    const Maps(),
+    const Profile(),
   ];
 
   @override
@@ -38,7 +38,7 @@ class _Homepage extends State<Homepage> {
             alignment: Alignment.center,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.notifications), // Ikon notifikasi
+                icon: const Icon(Icons.notifications), // Ikon notifikasi
                 onPressed: () {
                   // Logika yang akan dijalankan saat tombol ditekan
                 },
@@ -47,16 +47,16 @@ class _Homepage extends State<Homepage> {
                 top: 8,
                 right: 8,
                 child: Container(
-                  padding: EdgeInsets.all(2),
+                  padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     color: Colors.red,
                     borderRadius: BorderRadius.circular(90),
                   ),
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     minWidth: 14,
                     minHeight: 14,
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       '5', 
                       style: TextStyle(
