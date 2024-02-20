@@ -41,10 +41,13 @@ dependencies:
   flutter_polyline_points: ^1.0.0
   firebase_core: ^2.25.4
   cloud_firestore: ^4.15.4
+  flutter_rating_bar: ^4.0.1
   fl_chart: ^0.66.2
   flutter_signin_button: ^2.0.0
   flutter_launcher_icons: ^0.13.1
-
+  google_sign_in: ^6.2.1
+  firebase_auth: ^4.16.0
+  fluttertoast: ^8.2.4
 
 dev_dependencies:
   flutter_test:
