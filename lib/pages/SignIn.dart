@@ -3,6 +3,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_flare/pages/Homepage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:safe_flare/firebase.dart';
+import 'package:safe_flare/widgets/toast.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -13,6 +16,10 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,16 +39,18 @@ class _SignInState extends State<SignIn> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const TextField(
-                    decoration: InputDecoration( 
+                  TextField(
+                    controller: _email,
+                    decoration: InputDecoration(
                       hintText: "Email",
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const TextField(
+                  TextField(
                     obscureText: true,
+                    controller: _password,
                     decoration: InputDecoration( 
                       hintText: "Password",
                     ),
@@ -49,12 +58,14 @@ class _SignInState extends State<SignIn> {
                   const SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) {
-                        return Homepage();
-                      })
-                    );
+                  ElevatedButton(onPressed: () async {
+                    if(await _signIn()) {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) {
+                            return Homepage();
+                          })
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor:  const Color(0xffdf826c),
@@ -89,4 +100,20 @@ class _SignInState extends State<SignIn> {
       backgroundColor:  const Color(0xfff8ffd2),
     );
   }
+
+  Future<bool> _signIn() async {
+    String email = _email.text;
+    String password = _password.text;
+
+    User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+    if (user != null) {
+      showToast(message: "User is successfully signed in");
+      return true;
+    } else {
+      showToast(message: "User failed to signed in");
+      return false;
+    }
+  }
+
 }

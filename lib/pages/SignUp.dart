@@ -1,6 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:safe_flare/pages/Homepage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:safe_flare/firebase.dart';
+import 'package:safe_flare/widgets/toast.dart';
 
 class SignUp extends StatefulWidget {
   final Function toggleView;
@@ -11,6 +14,12 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _verifpassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +37,8 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 20,
               ),     
-              const TextField(
+              TextField(
+                controller: _name,
                 decoration: InputDecoration( 
                   hintText: "Full Name",
                 ),
@@ -36,7 +46,8 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 10,
               ),              
-              const TextField(
+              TextField(
+                controller: _email,
                 decoration: InputDecoration( 
                   hintText: "Email",
                 ),
@@ -44,7 +55,8 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 10,
               ),         
-              const TextField(
+              TextField(
+                controller: _password,
                 obscureText: true,
                 decoration: InputDecoration( 
                   hintText: "Password",
@@ -53,7 +65,8 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 10,
               ),     
-              const TextField(
+              TextField(
+                controller: _verifpassword,
                 obscureText: true,
                 decoration: InputDecoration( 
                   hintText: "Verify password",
@@ -62,12 +75,14 @@ class _SignUpState extends State<SignUp> {
               const SizedBox(
                 height: 20,
               ),
-              ElevatedButton(onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) {
-                    return Homepage();
-                  })
-                );
+              ElevatedButton(onPressed: () async {
+                if(await _signUp()) {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return Homepage();
+                      })
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor:  const Color(0xffdf826c),
@@ -101,4 +116,27 @@ class _SignUpState extends State<SignUp> {
       backgroundColor: const Color(0xfff8ffd2),
     );
   }
+
+  Future<bool> _signUp() async {
+    String email = _email.text;
+    String password = _password.text;
+    String verify_password = _verifpassword.text;
+    String username = _name.text;
+    if(password == verify_password) {
+      User? user = await _auth.signUpWithEmailAndPassword(
+          username, email, password);
+
+      if (user != null) {
+        showToast(message: "User is successfully register");
+        return true;
+      } else {
+        showToast(message: "User failed to register");
+        return false;
+      }
+    } else {
+      showToast(message: "Password Not Match");
+      return false;
+    }
+  }
+
 }
