@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:safe_flare/pages/InputReport.dart';
+import 'package:safe_flare/pages/ReportHistory.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -42,7 +44,13 @@ class _HomeState extends State<Home> {
                   Column(
                     children: [
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return const ReportHistory();
+                              })
+                            );                            
+                          },
                           child: const Padding(
                             padding: EdgeInsets.all(10),
                             child: Image(
@@ -55,7 +63,8 @@ class _HomeState extends State<Home> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               fixedSize: Size(
-                                  MediaQuery.of(context).size.width * 0.4, 100))),
+                                  MediaQuery.of(context).size.width * 0.4, 100))
+                      ),
                       const SizedBox(
                         height: 5,
                       ),
@@ -72,7 +81,13 @@ class _HomeState extends State<Home> {
                   Column(
                     children: [
                       ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) {
+                                return const InputReport();
+                              })
+                            );                         
+                          },
                           child: const Padding(
                             padding: EdgeInsets.all(10),
                             child: Image(
@@ -142,7 +157,11 @@ class _HomeState extends State<Home> {
                       color: const Color(0xffd0f288),
                       icon: const Icon(Icons.add_circle),
                       onPressed: () {
-                        // Logika yang akan dijalankan saat tombol ditekan
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) {
+                            return const InputReport();
+                          })
+                        );  
                       },
                     ),
                   ],
