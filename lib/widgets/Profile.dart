@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:safe_flare/firebase.dart';
+import 'package:safe_flare/pages/AuthenticateSignInFirst.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -8,6 +10,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -38,9 +42,12 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SizedBox(height: 20.0),
-                  CircleAvatar(
+                  Center(
+                  child: CircleAvatar(
                     radius: 50.0,
-                    backgroundImage: AssetImage('assets/profile_picture.jpg'),
+                    backgroundImage: AssetImage('assets/images/profile_picture.png'),
+                    child: SizedBox.shrink(),
+                  )
                   ),
                   SizedBox(height: 20.0),
                   Text(
@@ -119,7 +126,12 @@ class _ProfileState extends State<Profile> {
         const SizedBox(height: 20.0),
         ElevatedButton(
           onPressed: () {
-            // Tambahkan fungsi untuk meng-handle logout atau navigasi ke halaman pengaturan
+            _auth.logout();
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) {
+                  return const AuthenticateSignInFirst();
+                })
+            );
           },
           child: const Text('Logout'),
         ),

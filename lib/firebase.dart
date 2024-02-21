@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:safe_flare/widgets/toast.dart';
@@ -6,6 +8,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 class FirebaseAuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+
 
   Future<User?> signUpWithEmailAndPassword(
       String username, String email, String password) async {
@@ -68,4 +72,27 @@ class FirebaseAuthService {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  //check if user login or not
+  Future<bool> checkLogin() async {
+    Completer<bool> completer = Completer<bool>();
+
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        completer.complete(false);
+      } else {
+        completer.complete(true);
+      }
+    });
+
+    return completer.future;
+  }
+
+  Future logout() async{
+    try {
+      await _auth.signOut();
+      showToast(message: 'logout has been successful');
+    } on FirebaseAuthException catch (e) {
+      showToast(message: 'An error occurred: ${e.code}');
+    }
+  }
 }

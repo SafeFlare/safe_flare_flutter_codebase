@@ -6,6 +6,7 @@ import 'package:safe_flare/widgets/Maps.dart';
 import 'package:safe_flare/widgets/Profile.dart';
 
 class Homepage extends StatefulWidget {
+
   @override
   State<Homepage> createState() => _Homepage();
 }
@@ -21,7 +22,9 @@ class _Homepage extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(canPop: false,
+    child:
+      Scaffold(
       appBar: AppBar(
         leading: const Padding(
             padding: EdgeInsets.fromLTRB(10, 10, 0, 10),
@@ -100,7 +103,7 @@ class _Homepage extends State<Homepage> {
         },
         backgroundColor: const Color(0xffd0f288),
       ),
-    );
+    ));
   }
 
 }

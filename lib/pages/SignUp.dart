@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:safe_flare/pages/Homepage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:safe_flare/firebase.dart';
 import 'package:safe_flare/widgets/toast.dart';
@@ -77,11 +76,7 @@ class _SignUpState extends State<SignUp> {
               ),
               ElevatedButton(onPressed: () async {
                 if(await _signUp()) {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) {
-                        return Homepage();
-                      })
-                  );
+                  widget.toggleView("homepage");
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -101,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                       text: 'Login here',
                       style: const TextStyle(color: Color(0xffdf826c), fontWeight: FontWeight.bold),
                       recognizer: TapGestureRecognizer()..onTap = () {
-                        widget.toggleView();
+                        widget.toggleView("login");
                       },
                     )
                   ]
