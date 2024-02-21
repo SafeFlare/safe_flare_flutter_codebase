@@ -168,7 +168,18 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),          
-            
+            SizedBox(height: 40,),
+            Center( 
+              child: Column( 
+                children: [ 
+                  Image(image: AssetImage("assets/images/walk_forest_illust.png"),
+                  width: MediaQuery.of(context).size.width * 0.5,),
+                  SizedBox(height: 10,),
+                  Text("Your area is currently safe from fire risk", style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 157, 217, 27)),)
+                ],
+              ),
+            ),
+            SizedBox(height: 20,),
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Column(children: [
