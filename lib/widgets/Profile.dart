@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:safe_flare/firebase.dart';
 import 'package:safe_flare/pages/AuthenticateSignInFirst.dart';
+import 'package:safe_flare/pages/Account.dart';
+import 'package:safe_flare/pages/Settings.dart';
+import 'package:safe_flare/pages/Add_Device.dart';
+import 'package:safe_flare/pages/Feedback.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -99,25 +103,41 @@ class _ProfileState extends State<Profile> {
               Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             ElevatedButton(
               onPressed: () {
-                // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return Account();
+                      })
+                  );
               },
               child: const Text('Account'),
             ),
             ElevatedButton(
               onPressed: () {
-                // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return Settings();
+                      })
+                  );
               },
               child: const Text('App Setting'),
             ),
             ElevatedButton(
               onPressed: () {
-                // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return AddDevice();
+                      })
+                  );
               },
               child: const Text('Add Device'),
             ),
             ElevatedButton(
               onPressed: () {
-                // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) {
+                        return FeedbackPage();
+                      })
+                  );
               },
               child: const Text('Feedback'),
             ),

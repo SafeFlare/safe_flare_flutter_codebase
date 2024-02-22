@@ -7,7 +7,7 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
-  TextEditingController _feedbackController = TextEditingController();
+  TextEditingController _FeedbackPageController = TextEditingController();
   double _rating = 0;
   String _selectedOption = 'Option 1';
 
@@ -15,7 +15,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Feedback Page'),
+        title: Text('FeedbackPage Page'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,14 +23,14 @@ class _FeedbackPageState extends State<FeedbackPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Feedback:',
+              'FeedbackPage:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             TextField(
-              controller: _feedbackController,
+              controller: _FeedbackPageController,
               maxLines: 3,
               decoration: InputDecoration(
-                hintText: 'Enter your feedback here',
+                hintText: 'Enter your FeedbackPage here',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -79,14 +79,14 @@ class _FeedbackPageState extends State<FeedbackPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Process the feedback
-                String feedbackText = _feedbackController.text;
-                // You can now use feedbackText, _rating, _selectedOption for further processing
-                print('Feedback: $feedbackText');
+                // Process the FeedbackPage
+                String FeedbackPageText = _FeedbackPageController.text;
+                // You can now use FeedbackPageText, _rating, _selectedOption for further processing
+                print('FeedbackPage: $FeedbackPageText');
                 print('Rating: $_rating');
                 print('Selected Option: $_selectedOption');
               },
-              child: Text('Submit Feedback'),
+              child: Text('Submit FeedbackPage'),
             ),
           ],
         ),

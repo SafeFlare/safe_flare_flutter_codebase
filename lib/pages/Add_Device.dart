@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class AddDevicePage extends StatefulWidget {
+class AddDevice extends StatefulWidget {
   @override
-  _AddDevicePageState createState() => _AddDevicePageState();
+  _AddDeviceState createState() => _AddDeviceState();
 }
 
-class _AddDevicePageState extends State<AddDevicePage> {
+class _AddDeviceState extends State<AddDevice> {
   int _numberOfPoints = 0;
   TextEditingController _deviceIdController = TextEditingController();
   TextEditingController _latitudeController = TextEditingController();

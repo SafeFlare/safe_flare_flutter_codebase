@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatefulWidget {
+class Settings extends StatefulWidget {
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  _SettingsState createState() => _SettingsState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsState extends State<Settings> {
   bool _enableFeature = false; // Initial value for the checkbox
 
   @override
