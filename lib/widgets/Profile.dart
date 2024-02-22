@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:safe_flare/firebase.dart';
 import 'package:safe_flare/pages/AuthenticateSignInFirst.dart';
+import 'package:safe_flare/pages/Feedback.dart';
+import 'package:safe_flare/PageRoute.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -117,7 +119,11 @@ class _ProfileState extends State<Profile> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Tambahkan fungsi yang akan dijalankan saat tombol ditekan
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) {
+                      return FeedbackPage();
+                    })
+                );
               },
               child: const Text('Feedback'),
             ),
