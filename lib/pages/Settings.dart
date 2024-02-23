@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatefulWidget {
+class Settings extends StatefulWidget {
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  _SettingsState createState() => _SettingsState();
 }
 
-class _SettingsPageState extends State<SettingsPage> {
+class _SettingsState extends State<Settings> {
   bool _enableFeature = false; // Initial value for the checkbox
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('App Settings'),
+        title: Text('App Settings', style: TextStyle(
+              fontWeight: FontWeight.bold,
+            )),
+        backgroundColor: const Color(0xffd0f288),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
