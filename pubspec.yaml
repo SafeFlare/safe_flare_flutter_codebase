@@ -38,7 +38,6 @@ dependencies:
   flutter_native_splash: ^2.3.10
   dio: ^4.0.0
   google_maps_flutter: ^2.0.2
-  flutter_polyline_points: ^1.0.0
   firebase_core: ^2.25.4
   cloud_firestore: ^4.15.4
   flutter_rating_bar: ^4.0.1
@@ -49,6 +48,9 @@ dependencies:
   firebase_auth: ^4.16.0
   fluttertoast: ^8.2.4
   geocoding: ^2.2.0
+  shared_preferences: ^2.2.2
+  map_location_picker: ^1.2.7
+  google_maps_place_picker_mb: ^3.1.2
 
 dev_dependencies:
   flutter_test:

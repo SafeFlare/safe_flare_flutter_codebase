@@ -43,8 +43,9 @@ class _MapsState extends State<Maps> {
 
 
 
-  static List<Map<String, dynamic>> markers = [
+  final List<Map<String, dynamic>> markers = [
     {
+      "id": 1,
       "ImgUrl": "https://www.mongabay.co.id/wp-content/uploads/2020/12/Tanah-Peramun6.jpg",
       "Temp": 21.0,
       "Humid": 0.70,
@@ -54,8 +55,9 @@ class _MapsState extends State<Maps> {
       "RiskLevel": 2,
     },
     {
+      "id": 2,
       "ImgUrl": "https://www.mongabay.co.id/wp-content/uploads/2020/12/Tanah-Peramun6.jpg",
-      "Temp": 20.0,
+      "Temp": 22.0,
       "Humid": 0.70,
       "Lat": -2.981664407505179, 
       "Long": 104.73517345264983,
@@ -63,8 +65,9 @@ class _MapsState extends State<Maps> {
       "RiskLevel": 1,
     },
     {
+      "id": 3,
       "ImgUrl": "https://www.mongabay.co.id/wp-content/uploads/2020/12/Tanah-Peramun6.jpg",
-      "Temp": 20.0,
+      "Temp": 23.0,
       "Humid": 0.70,
       "Lat": -2.9866418709714324, 
       "Long": 104.72981541392885,
@@ -72,8 +75,9 @@ class _MapsState extends State<Maps> {
       "RiskLevel": 3,
     },
     {
+      "id": 4,
       "ImgUrl": "https://www.mongabay.co.id/wp-content/uploads/2020/12/Tanah-Peramun6.jpg",
-      "Temp": 20.0,
+      "Temp": 24.0,
       "Humid": 0.70,
       "Lat": -2.986766307269193,
       "Long": 104.73635720539052,
@@ -94,10 +98,11 @@ class _MapsState extends State<Maps> {
         myLocationButtonEnabled: true,
         markers: markers.map((data) {
             return Marker(
-              markerId: const MarkerId("Tes tempat"),
+              markerId: MarkerId(data["id"].toString()),
               position: LatLng(data["Lat"]!, data["Long"]!),
               icon: markerIcon ?? BitmapDescriptor.defaultMarker,
               onTap: (){
+                print(data["Temp"]);
                 _openInfo(context, data["ImgUrl"], data["Temp"], data["Humid"], data["Lat"], data["Long"], data["Wind"], data["RiskLevel"]);
               }
             );
@@ -118,25 +123,12 @@ class _MapsState extends State<Maps> {
   }
 
   void _openInfo(BuildContext context, String imgurl, double temp, double humid, double lat, double long, String wind, int risklevel) {
+    setState(() {
+      _address = "Loading location data";
+    });
     _getLocation(lat, long).then((val) => setState(() {
           _address = val;
         }));
-    // switch(risklevel) {
-    //   case 1:
-    //     setState(() {
-    //       firelevel = "Aman/Tingkat Rendah Kebakaran";
-    //     });
-
-    //   case 2:
-    //     setState(() {
-    //       firelevel = "Kurang Aman/Tingkat Sedang Kebakaran";
-    //     });
-
-    //   case 3:
-    //     setState(() {
-    //       firelevel = "Tidak AmanTingkat Tinggi Kebakaran";
-    //     });
-    // }
     showGeneralDialog(
       context: context, 
       pageBuilder:(context, animation1, animation2) {
@@ -150,8 +142,8 @@ class _MapsState extends State<Maps> {
                 onPressed: () {
                   Navigator.pop(context);
                 }, 
-                icon: Icon(Icons.cancel)),
-              Spacer(),
+                icon: const Icon(Icons.cancel)),
+              const Spacer(),
             ],
           ),
           content: SizedBox( 
@@ -165,83 +157,83 @@ class _MapsState extends State<Maps> {
                     imgurl,
                   ),
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Text(_address),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Row( 
                   children: [ 
-                    Image(
+                    const Image(
                       width: 20,
                       image: AssetImage("assets/images/temp_icon.png")
                     ),
-                    SizedBox(width: 5,),
-                    Text("Temperatures :", textAlign: TextAlign.start,
+                    const SizedBox(width: 5,),
+                    const Text("Temperatures :", textAlign: TextAlign.start,
                       style: TextStyle( 
                         fontWeight: FontWeight.bold
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(temp.toString())
                   ],
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Row( 
                   children: [ 
-                    Image(
+                    const Image(
                       width: 20,
                       image: AssetImage("assets/images/humid_icon.png")
                     ),
-                    SizedBox(width: 5,),
-                    Text("Humidity :", textAlign: TextAlign.start,
+                    const SizedBox(width: 5,),
+                    const Text("Humidity :", textAlign: TextAlign.start,
                       style: TextStyle( 
                         fontWeight: FontWeight.bold
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text((humid * 100).toString()+"%")
                   ],
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Row( 
                   children: [ 
-                    Image(
+                    const Image(
                       width: 20,
                       image: AssetImage("assets/images/wind_dir_icon.png")
                     ),
-                    SizedBox(width: 5,),
-                    Text("Wind direction : ", textAlign: TextAlign.start,
+                    const SizedBox(width: 5,),
+                    const Text("Wind direction : ", textAlign: TextAlign.start,
                       style: TextStyle( 
                         fontWeight: FontWeight.bold
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(wind)
                   ],
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Row( 
                   children: [
-                    Image(
+                    const Image(
                       width: 40,
                       image: AssetImage("assets/images/fire_safety_level.png")
                     ),
-                    Spacer(),
+                    const SizedBox(width: 10,),
                     if(risklevel == 1) 
-                      Text("Aman/Tingkat Rendah Kebakaran", style: TextStyle( 
+                      const Text("No risk of wildfire", style: TextStyle( 
                           fontWeight: FontWeight.bold,
                           color: Colors.green
                         ),
                       )
                     else if (risklevel == 2)
-                      Text("Kurang Aman/Tingkat Sedang Kebakaran", style: TextStyle( 
+                      const Text("Medium risk of wildfire", style: TextStyle( 
                           fontWeight: FontWeight.bold,
                           color: Colors.orange
                         ),
                       )
                     else 
-                      Text("Tidak Aman/Tingkat Tinggi Kebakaran", style: TextStyle( 
+                      const Text("High risk of wildfire", style: TextStyle( 
                           fontWeight: FontWeight.bold,
-                          color: Colors.red
+                          color: Colors.red,
                         ),
                       )
                   ],
@@ -264,6 +256,6 @@ class _MapsState extends State<Maps> {
   placemarkFromCoordinates(lat, long);
 
   var place = addresses.first;
-  return '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+  return '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}';
 }
 }

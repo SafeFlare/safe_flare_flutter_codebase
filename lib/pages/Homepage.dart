@@ -93,7 +93,7 @@ class _Homepage extends State<Homepage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box_rounded),
-            label: "Profil",
+            label: "Profile",
           ),
         ],
         onTap: (index) {
