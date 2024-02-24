@@ -39,21 +39,21 @@ class _AddDeviceState extends State<AddDevice> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Number of Points:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20,),
-              TextField(
-                keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  setState(() {
-                    _numberOfPoints = int.tryParse(value) ?? 0;
-                  });
-                },
-                decoration: inpDec.copyWith(hintText: 'Enter amount of points here'),
-              ),
-              const SizedBox(height: 20),
+              // const Text(
+              //   'Number of Points:',
+              //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              // ),
+              // const SizedBox(height: 20,),
+              // TextField(
+              //   keyboardType: TextInputType.number,
+              //   onChanged: (value) {
+              //     setState(() {
+              //       _numberOfPoints = int.tryParse(value) ?? 0;
+              //     });
+              //   },
+              //   decoration: inpDec.copyWith(hintText: 'Enter amount of points here'),
+              // ),
+              // const SizedBox(height: 20),
               const Text(
                 'Device ID:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -148,7 +148,7 @@ class _AddDeviceState extends State<AddDevice> {
               ElevatedButton(
                 onPressed: () {
                   // Process the data, e.g., save it to a database
-                  print('Number of Points: $_numberOfPoints');
+                  // print('Number of Points: $_numberOfPoints');
                   print('Device ID: ${_deviceIdController.text}');
                   print('location :  ${_locationController.text}');
                   print('Latitude: ${saveLatitude}');
