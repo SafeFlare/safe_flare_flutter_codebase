@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:safe_flare/widgets/InpDec.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -6,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:safe_flare/widgets/toast.dart';
+import 'package:image_picker/image_picker.dart';
 
 class InputReport extends StatefulWidget {
   const InputReport({super.key});
@@ -20,6 +23,7 @@ class _InputReportState extends State<InputReport> {
   double? saveLongitude;
   bool _isButtonDisabled = false;
   String buttonTextCurrentLocation = "Use current location";
+  File ? _selectedImage;
 
   TextEditingController _locationController = TextEditingController();
   TextEditingController _nameController = TextEditingController();
@@ -49,23 +53,42 @@ class _InputReportState extends State<InputReport> {
             padding: EdgeInsets.all(20),
             child: Column( 
               children: [ 
-                Image(
+                _selectedImage != null ? Image.file(_selectedImage!, width: MediaQuery.of(context).size.width * 0.5,) : Image(
                   image: AssetImage("assets/images/insert_image.png"),
                   width: MediaQuery.of(context).size.width * 0.5,
                 ),
-                ElevatedButton(onPressed: () {
-                  
-                  }, 
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xffdf826c),
-                      fixedSize: Size(MediaQuery.of(context).size.width, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                      ),
-                    ),
-                  child: const Text("Take a picture", style: TextStyle(color: Colors.white),),
+                Row(
+                  children: [ 
+                    ElevatedButton(onPressed: () {
+                        _pickImageFromCamera();
+                      }, 
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xffdf826c),
+                          fixedSize: Size(MediaQuery.of(context).size.width*0.43, 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0),
+                          ),
+                        ),
+                      child: const Text("Camera", style: TextStyle(color: Colors.white),),
 
+                    ),
+                    Spacer(),
+                    ElevatedButton(onPressed: () {
+                        _pickImageFromGallery();
+                      }, 
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xffdf826c),
+                          fixedSize: Size(MediaQuery.of(context).size.width*0.43, 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0),
+                          ),
+                        ),
+                      child: const Text("Gallery", style: TextStyle(color: Colors.white),),
+
+                    ),
+                  ],
                 ),
+
                 SizedBox(height: 20,),
                 TextFormField(decoration: inpDec.copyWith(hintText: 'Report name'), controller: _nameController,),
                 SizedBox(height: 20,),
@@ -233,5 +256,23 @@ Future<void> _getAddressFromLatLng(Position position) async {
       return false;
     }
     return true;
+  }
+
+  Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if(returnedImage == null) return;
+    setState(() {
+      _selectedImage = File(returnedImage!.path);
+    });
+  }
+
+  Future _pickImageFromCamera() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if(returnedImage == null) return;
+    setState(() {
+      _selectedImage = File(returnedImage!.path);
+    });
   }
 }
