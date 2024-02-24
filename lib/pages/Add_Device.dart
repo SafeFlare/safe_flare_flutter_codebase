@@ -16,6 +16,8 @@ class _AddDeviceState extends State<AddDevice> {
   Position? _currentPosition;
   double? saveLatitude;
   double? saveLongitude;
+  bool _isButtonDisabled = false;
+  String buttonTextCurrentLocation = "Use current location";
   int _numberOfPoints = 0;
   String address = "null";
   String autocompletePlace = "null";
@@ -70,36 +72,37 @@ class _AddDeviceState extends State<AddDevice> {
               TextField(
                 controller: _locationController,
                 decoration: inpDec.copyWith(hintText: 'Open location picker'),
+                onTap: () {
+                  Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PlacePicker(
+                            apiKey: 'AIzaSyCb6frJQNMU4MdfXeYZtwkYrUa4gq00F-M',
+                            onPlacePicked: (result) { 
+                              _getCoordFromLocation(result.formattedAddress!);
+                              _locationController.text = result.formattedAddress ?? "";
+                              Navigator.of(context).pop();
+                            },
+                            initialPosition: const LatLng(29.146727, 76.464895),
+                            useCurrentLocation: true,
+                            resizeToAvoidBottomInset: false, // only works in page mode, less flickery, remove if wrong offsets
+                          ),
+                        ),
+                      );
+                },
+                readOnly: true,
               ),
               const SizedBox(height: 20),
               Row( 
                 children: [ 
                   ElevatedButton(
-                    onPressed: _getCurrentPosition,
-                    child: const Text('Use current location', maxLines: 1, style: TextStyle( 
-                      color: Colors.white
-                    ),),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xffdf826c),
-                      fixedSize: Size(MediaQuery.of(context).size.width * 0.45, 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.0),
-                      ),
-                    ),
-                    
-                  ),
-                  const Spacer(),
-                  ElevatedButton(
                     onPressed: () async {
-                      // Get current location
                       Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => PlacePicker(
                                 apiKey: 'AIzaSyCb6frJQNMU4MdfXeYZtwkYrUa4gq00F-M',
                                 onPlacePicked: (result) { 
-                                  print(result.formattedAddress); 
-                                  print(result.addressComponents);
                                   _getCoordFromLocation(result.formattedAddress!);
                                   _locationController.text = result.formattedAddress ?? "";
                                   Navigator.of(context).pop();
@@ -123,6 +126,21 @@ class _AddDeviceState extends State<AddDevice> {
                     ),
                     
                   ),
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: _isButtonDisabled ? null : _getCurrentPosition,
+                    child: Text(buttonTextCurrentLocation, maxLines: 1, style: TextStyle( 
+                      color: Colors.white
+                    ),),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xffdf826c),
+                      fixedSize: Size(MediaQuery.of(context).size.width * 0.45, 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.0),
+                      ),
+                    ),
+                    
+                  ),
                 ],
               ),
 
@@ -132,8 +150,9 @@ class _AddDeviceState extends State<AddDevice> {
                   // Process the data, e.g., save it to a database
                   print('Number of Points: $_numberOfPoints');
                   print('Device ID: ${_deviceIdController.text}');
-                  // print('Latitude: ${_latitudeController.text}');
-                  // print('Longitude: ${_longitudeController.text}');
+                  print('location :  ${_locationController.text}');
+                  print('Latitude: ${saveLatitude}');
+                  print('Longitude: ${saveLongitude}');
                 },
                 child: const Text('Add Device', style: TextStyle(color: Colors.black), maxLines: 1,),
                 style: ElevatedButton.styleFrom(
@@ -152,14 +171,17 @@ class _AddDeviceState extends State<AddDevice> {
   }
 
   Future<void> _getCurrentPosition() async {
+    setState(() {
+      _isButtonDisabled = true;
+      buttonTextCurrentLocation = "Fetching location";
+    });
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) return;
     await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      setState(() => {_currentPosition = position,
-        _getAddressFromLatLng(position)
-      });
+      _currentPosition = position;
+      _getAddressFromLatLng(position);
     }).catchError((e) {
       debugPrint(e);
     });
@@ -169,12 +191,14 @@ Future<void> _getAddressFromLatLng(Position position) async {
   await placemarkFromCoordinates(
           _currentPosition!.latitude, _currentPosition!.longitude)
       .then((List<Placemark> placemarks) {
-    setState(() {
-      saveLatitude = _currentPosition!.latitude;
-      saveLongitude = _currentPosition!.longitude;
-    });
+    saveLatitude = _currentPosition!.latitude;
+    saveLongitude = _currentPosition!.longitude;
     Placemark place = placemarks[0];
     _locationController.text = '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+    setState(() {
+      _isButtonDisabled = false;
+      buttonTextCurrentLocation = "Use current location";
+    });
   }).catchError((e) {
     debugPrint(e);
   });
@@ -187,8 +211,6 @@ Future<void> _getAddressFromLatLng(Position position) async {
     
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //     content: Text('Location services are disabled. Please enable the services')));
       showToast(message: 'Location services are disabled. Please enable the services');
       return false;
     }
@@ -197,15 +219,11 @@ Future<void> _getAddressFromLatLng(Position position) async {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {   
         showToast(message: 'Location permissions are denied');
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //     const SnackBar(content: Text('Location permissions are denied')));
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
       showToast(message: 'Location permissions are permanently denied, we cannot request permissions.');
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //     content: Text('Location permissions are permanently denied, we cannot request permissions.')));
       return false;
     }
     return true;
@@ -217,11 +235,7 @@ Future<void> _getAddressFromLatLng(Position position) async {
     locationFromAddress(location);
 
     var place = addresses.first;
-    setState(() {
-      saveLatitude = place.latitude;
-      saveLongitude = place.longitude;
-    });
-    print(place.latitude);
-    print(place.longitude);
+    saveLatitude = place.latitude;
+    saveLongitude = place.longitude;
   }
 }
