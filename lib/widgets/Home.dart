@@ -51,19 +51,19 @@ class _HomeState extends State<Home> {
                               })
                             );                            
                           },
-                          child: const Padding(
-                            padding: EdgeInsets.all(10),
-                            child: Image(
-                                image:
-                                    AssetImage("assets/images/clock_logo.png")),
-                          ),
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xfff8ffd2),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               fixedSize: Size(
-                                  MediaQuery.of(context).size.width * 0.4, 100))
+                                  MediaQuery.of(context).size.width * 0.4, 100)),
+                          child: const Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Image(
+                                image:
+                                    AssetImage("assets/images/clock_logo.png")),
+                          )
                       ),
                       const SizedBox(
                         height: 5,
@@ -179,7 +179,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 10,),
             const Padding(
               padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Column(children: [
