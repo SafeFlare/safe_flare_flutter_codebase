@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:safe_flare/widgets/InpDec.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -6,6 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:safe_flare/widgets/toast.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 
 class AddDevice extends StatefulWidget {
   @override
@@ -23,6 +27,7 @@ class _AddDeviceState extends State<AddDevice> {
   String autocompletePlace = "null";
   TextEditingController _deviceIdController = TextEditingController();
   TextEditingController _locationController = TextEditingController();
+  File ? _selectedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -39,21 +44,47 @@ class _AddDeviceState extends State<AddDevice> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // const Text(
-              //   'Number of Points:',
-              //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              // ),
-              // const SizedBox(height: 20,),
-              // TextField(
-              //   keyboardType: TextInputType.number,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       _numberOfPoints = int.tryParse(value) ?? 0;
-              //     });
-              //   },
-              //   decoration: inpDec.copyWith(hintText: 'Enter amount of points here'),
-              // ),
-              // const SizedBox(height: 20),
+                Center(
+                  child: _selectedImage != null ? Image.file(_selectedImage!, width: MediaQuery.of(context).size.width * 0.5,) : Image(
+                    image: AssetImage("assets/images/insert_image.png"),
+                    width: MediaQuery.of(context).size.width * 0.5,
+                  ),
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  children: [ 
+                    ElevatedButton(onPressed: () {
+                        _pickImageFromCamera();
+                      }, 
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xffdf826c),
+                          fixedSize: Size(MediaQuery.of(context).size.width*0.43, 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0),
+                          ),
+                        ),
+                      child: const Text("Camera", style: TextStyle(color: Colors.white),),
+
+                    ),
+                    Spacer(),
+                    ElevatedButton(onPressed: () {
+                        _pickImageFromGallery();
+                      }, 
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xffdf826c),
+                          fixedSize: Size(MediaQuery.of(context).size.width*0.43, 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(7.0),
+                          ),
+                        ),
+                      child: const Text("Gallery", style: TextStyle(color: Colors.white),),
+
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 20,),
+            
               const Text(
                 'Device ID:',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -146,13 +177,20 @@ class _AddDeviceState extends State<AddDevice> {
 
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Process the data, e.g., save it to a database
                   // print('Number of Points: $_numberOfPoints');
+                  var response = await http.post(Uri.parse("https://safeflare-jfrbg3xq6a-as.a.run.app/api/reg_device"), body: {
+                    "id": _deviceIdController.text,
+                    "lat": saveLatitude.toString(),
+                    "long": saveLongitude.toString(),
+                  });
+                  print(response.body);
                   print('Device ID: ${_deviceIdController.text}');
                   print('location :  ${_locationController.text}');
                   print('Latitude: ${saveLatitude}');
                   print('Longitude: ${saveLongitude}');
+                  
                 },
                 child: const Text('Add Device', style: TextStyle(color: Colors.black), maxLines: 1,),
                 style: ElevatedButton.styleFrom(
@@ -168,6 +206,10 @@ class _AddDeviceState extends State<AddDevice> {
         ),
       )
     );
+  }
+
+  postData() async {
+
   }
 
   Future<void> _getCurrentPosition() async {
@@ -237,5 +279,23 @@ Future<void> _getAddressFromLatLng(Position position) async {
     var place = addresses.first;
     saveLatitude = place.latitude;
     saveLongitude = place.longitude;
+  }
+
+    Future _pickImageFromGallery() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if(returnedImage == null) return;
+    setState(() {
+      _selectedImage = File(returnedImage!.path);
+    });
+  }
+
+  Future _pickImageFromCamera() async {
+    final returnedImage = await ImagePicker().pickImage(source: ImageSource.camera);
+
+    if(returnedImage == null) return;
+    setState(() {
+      _selectedImage = File(returnedImage!.path);
+    });
   }
 }

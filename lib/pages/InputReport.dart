@@ -47,7 +47,9 @@ class _InputReportState extends State<InputReport> {
             )),
         backgroundColor: const Color(0xffd0f288),
       ),
-      body: Center( 
+      body: 
+      SingleChildScrollView( 
+        child:       Center( 
         child: Form(child: 
           Padding(
             padding: EdgeInsets.all(20),
@@ -90,7 +92,7 @@ class _InputReportState extends State<InputReport> {
                 ),
 
                 SizedBox(height: 20,),
-                TextFormField(decoration: inpDec.copyWith(hintText: 'Report name'), controller: _nameController,),
+                TextFormField(decoration: inpDec.copyWith(hintText: 'Reporter name'), controller: _nameController,),
                 SizedBox(height: 20,),
                 TextFormField(decoration: inpDec.copyWith(hintText: 'Location'), controller: _locationController, 
                 readOnly: true,
@@ -185,6 +187,7 @@ class _InputReportState extends State<InputReport> {
           )
         )
       ),
+      )
     );
   }
 

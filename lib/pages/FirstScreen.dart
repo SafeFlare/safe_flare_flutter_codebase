@@ -35,7 +35,7 @@ class FirstScreen extends StatelessWidget {
                 const Image(
                   image: AssetImage("assets/images/forest_illustration.png"),),
                 const SizedBox(height: 20,),
-                const Text("Halo Masyarakat!",
+                const Text("Hello People!",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -45,7 +45,7 @@ class FirstScreen extends StatelessWidget {
                 const Padding(padding: EdgeInsets.fromLTRB(40, 0, 40, 0),
                   child:
                   Text(
-                      "Menanggapi adanya keresahan kebakaran hutan dan lahan yang dilakukan oleh orang yang tak bertanggung jawab kami berinisiatif untuk ikut membantu dalam pemantauan kebakaran hutan dan lahan baik terbakar secara disengaja atau tidak disengaja. Mari bergabung dengan kami untuk bersama sama memantau hutan dan lahan dibumi kita tercinta.",
+                      "Responding to the risks of forest and land fires carried out by irresponsible people, we took the initiative to help in monitoring forest and land fires wether they were intentionally or unintentionally burned. Let's join us in our quest to monitor the forest and land in our beloved earth.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.normal,
@@ -66,7 +66,7 @@ class FirstScreen extends StatelessWidget {
                         fixedSize: const Size(150, 20)
                     ),
                     child: const Text(
-                      "Masuk", style: TextStyle(color: Colors.white),)
+                      "Login", style: TextStyle(color: Colors.white),)
                 ),
                 OutlinedButton(onPressed: () {
                   Navigator.of(context).push(
@@ -79,7 +79,7 @@ class FirstScreen extends StatelessWidget {
                       fixedSize: const Size(150, 20)
                   ),
                   child: const Text(
-                    "Daftar", style: TextStyle(color: Colors.black),),
+                    "Sign Up", style: TextStyle(color: Colors.black),),
                 )
               ],
             )

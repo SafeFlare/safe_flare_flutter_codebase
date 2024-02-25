@@ -55,7 +55,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   SizedBox(height: 20.0),
                   Text(
-                    'Nama Anda',
+                    'Muhammad Rizalul Fiqri',
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
@@ -64,7 +64,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   SizedBox(height: 10.0),
                   Text(
-                    'Email Anda',
+                    'fiqrijambi@gmail.com',
                     style: TextStyle(
                       fontSize: 16.0,
                       color: Colors.grey,

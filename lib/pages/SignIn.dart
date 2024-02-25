@@ -23,7 +23,10 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
+        child: 
+        SingleChildScrollView(
+          child: 
+                  Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
@@ -91,6 +94,9 @@ class _SignInState extends State<SignIn> {
             ),
           ],
         )
+          ,
+        )
+
       ),
       backgroundColor:  const Color(0xfff8ffd2),
     );

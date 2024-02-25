@@ -24,7 +24,9 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: Center(
         child: 
-        Padding(
+        SingleChildScrollView( 
+          child:  
+                  Padding(
           padding: const EdgeInsets.fromLTRB(40,0,40,0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -107,6 +109,9 @@ class _SignUpState extends State<SignUp> {
             ],
           ),
         ),
+          
+        )
+
       ),
       backgroundColor: const Color(0xfff8ffd2),
     );
